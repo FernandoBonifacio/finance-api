@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_DATABASE || 'finance_db',
       autoLoadEntities: true,
-      //synchronize: false, sai truta
+      //synchronize: false, get out now Jao
     }),
   ],
 })

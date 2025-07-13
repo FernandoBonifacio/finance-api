@@ -102,27 +102,8 @@ Este projeto segue os princípios de Clean Architecture e DDD (Domain-Driven Des
 
 ## Estrutura de Pastas
 
-src/
-├── application/                # Casos de uso (Use Cases)
-│   └── use-cases/
-│       └── create-transaction.usecase.ts
-│       └── get-all-transactions.usecase.ts
-│       └── ...
-├── domain/                     # Regras de negócio (Entidades e Interfaces)
-│   └── entities/
-│       └── transaction.entity.ts
-│   └── repositories/
-│       └── transaction.repository.ts
-├── infrastructure/             # Integrações externas (ORM, DB, etc.)
-│   └── database/
-│       └── typeorm/
-│           └── entities/
-│           └── repositories/
-├── interfaces/                 # Interfaces externas (HTTP, Controllers, DTOs)
-│   └── controllers/
-│   └── modules/
-├── app.module.ts              # Módulo principal do NestJS
-└── main.ts                    # Bootstrap da aplicação
+<img width="629" height="534" alt="image" src="https://github.com/user-attachments/assets/9976b604-5a13-47df-af39-84b7d1c50c3a" />
+
 
 ## DDL Tabela Transactions
 CREATE TABLE public.transactions (

@@ -5,6 +5,7 @@ import { GetAllTransactionsUseCase } from 'src/application/use-cases/get-all-tra
 import { TypeOrmTransactionsModule } from 'src/infrastructure/database/typeorm/typeorm-transaction.module';
 import { ITransactionRepository } from 'src/domain/repositories/transaction.repository';
 import { GetTransactionByIdUseCase } from 'src/application/use-cases/get-transaction-by-id.usecase';
+import { UpdateTransactionUseCase } from 'src/application/use-cases/update-transaction.usecase';
 
 @Module({
   imports: [TypeOrmTransactionsModule],
@@ -28,11 +29,18 @@ import { GetTransactionByIdUseCase } from 'src/application/use-cases/get-transac
       useFactory: (repo: ITransactionRepository) => new GetTransactionByIdUseCase(repo),
       inject: [ITransactionRepository],
     },
+    UpdateTransactionUseCase,
+    {
+      provide: UpdateTransactionUseCase,
+      useFactory: (repo: ITransactionRepository) => new UpdateTransactionUseCase(repo),
+      inject: [ITransactionRepository],
+    },
   ],
   exports: [
     CreateTransactionUseCase, 
     GetAllTransactionsUseCase,
     GetTransactionByIdUseCase,
+    UpdateTransactionUseCase,
   ],
 })
 export class TransactionsModule {}

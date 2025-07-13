@@ -50,4 +50,12 @@ export class Transaction {
   setAmount(newAmount: number) {
     this.props.amount = newAmount;
   }
+
+  setType(type: TransactionType) {
+    this.props.type = type;
+  }
+
+  setCategory(category: string) {
+    this.props.category = category;
+  }
 }

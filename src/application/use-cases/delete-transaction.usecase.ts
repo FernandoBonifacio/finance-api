@@ -1,7 +1,15 @@
-export class DeleteTransactionUseCase {
-    constructor(private readonly transactionRepository) {}
+import { ITransactionRepository } from "src/domain/repositories/transaction.repository";
 
-    async execute(id: string): Promise<void> {
-        await this.transactionRepository.delete(id);
+export class DeleteTransactionUseCase {
+  constructor(private readonly transactionRepository: ITransactionRepository) {}
+
+  async execute(id: string): Promise<'notFound' | 'success'> {
+    const existing = await this.transactionRepository.findById(id);
+    if (!existing) {
+      return 'notFound';
     }
+
+    await this.transactionRepository.delete(id);
+    return 'success';
+  }
 }

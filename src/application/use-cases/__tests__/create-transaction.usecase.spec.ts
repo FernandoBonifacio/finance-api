@@ -13,7 +13,10 @@ describe('CreateTransactionUseCase', () => {
             findAll: jest.fn(),
             findById: jest.fn(),
             delete: jest.fn(),
+            update: jest.fn(),
+            count: jest.fn(),
         };
+
 
         useCase = new CreateTransactionUseCase(repository);
     });

@@ -5,8 +5,8 @@ export class GetAllTransactionsUseCase {
     constructor(private readonly transactionRepo: ITransactionRepository) {}
 
     async execute(page: number, pageSize: number): Promise<{ total: number; transactions: Transaction[] }> {
-        const all = await this.transactionRepo.findAll();
-        const total = all.length;
+        const all = await this.transactionRepo.findAll(page, pageSize);
+        const total = await this.transactionRepo.count();
 
         const start = (page - 1) * pageSize;
         const end = start + pageSize;

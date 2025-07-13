@@ -1,6 +1,6 @@
-import { ITransactionRepository } from "src/domain/repositories/transaction.reposity";
+import { ITransactionRepository } from "src/domain/repositories/transaction.repository";
 import { CreateTransactionUseCase } from "../create-transaction.usecase"
-import { Transaction as TransactionEntity } from '../../entities/transaction.entity';
+import { Transaction as TransactionEntity } from '../../../domain/entities/transaction.entity';
 
 
 describe('CreateTransactionUseCase', () => {

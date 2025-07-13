@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsNumber, IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { TransactionType } from '../../../domain/entities/transaction.entity';
+import { TransactionType } from 'src/domain/entities/transaction.entity';
 
 export class CreateTransactionDto {
   @ApiProperty({ example: 'salario' })

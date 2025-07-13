@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TransactionTypeOrmEntity } from './infrastructure/database/typeorm/entities/transaction.typeorm.entity';
-import { TransactionsModule } from './interfaces/controllers/transactions.module';
+import { TransactionsModule } from './interfaces/modules/transactions.module';
 
 @Module({
   imports: [

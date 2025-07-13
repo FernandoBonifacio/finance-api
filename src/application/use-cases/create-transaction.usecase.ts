@@ -1,5 +1,5 @@
-import { Transaction as TransactionEntity, TransactionType } from '../entities/transaction.entity';
-import { ITransactionRepository } from '../repositories/transaction.reposity';
+import { Transaction as TransactionEntity, TransactionType } from '../../domain/entities/transaction.entity';
+import { ITransactionRepository } from '../../domain/repositories/transaction.repository';
 
 export interface CreateTransactionInput {
   title: string;

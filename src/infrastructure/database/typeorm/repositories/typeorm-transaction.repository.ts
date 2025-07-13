@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 
 import { Transaction as DomainTransaction } from '../../../../domain/entities/transaction.entity';
-import { ITransactionRepository } from 'src/domain/repositories/transaction.reposity';
+import { ITransactionRepository } from 'src/domain/repositories/transaction.repository';
 import { TransactionTypeOrmEntity } from '../entities/transaction.typeorm.entity';
 
 @Injectable()

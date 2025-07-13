@@ -7,8 +7,8 @@ import {
 import { Response } from 'express';
 import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
-import { CreateTransactionUseCase } from 'src/domain/use-cases/create-transaction.usecase';
-import { CreateTransactionDto } from './controllers/dto/create-transaction.dto';
+import { CreateTransactionUseCase } from 'src/application/use-cases/create-transaction.usecase';
+import { CreateTransactionDto } from 'src/application/dtos/create-transaction.dto';
 
 @Controller('transactions')
 export class TransactionsController {

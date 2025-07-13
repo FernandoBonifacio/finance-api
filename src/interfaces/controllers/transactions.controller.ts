@@ -2,22 +2,25 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Query,
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { validate } from 'class-validator';
+import { isUUID, validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { CreateTransactionUseCase } from 'src/application/use-cases/create-transaction.usecase';
 import { CreateTransactionDto } from 'src/application/dtos/create-transaction.dto';
 import { GetAllTransactionsUseCase } from 'src/application/use-cases/get-all-transactions.usecase';
+import { GetTransactionByIdUseCase } from 'src/application/use-cases/get-transaction-by-id.usecase';
 
 @Controller('transactions')
 export class TransactionsController {
     constructor(
         private readonly createTransactionUseCase: CreateTransactionUseCase,
         private readonly getAllTransactionsUseCase: GetAllTransactionsUseCase,
+        private readonly getTransactionByIdUseCase: GetTransactionByIdUseCase,
     ) {}
 
     @Post()
@@ -95,6 +98,42 @@ export class TransactionsController {
             res.status(500).send({
                 status: 'error',
                 message: 'Failed to list transactions',
+            });
+        }
+    }
+
+    @Get(':id')
+    async findById(
+        @Param('id') id: string,
+        @Res() res,
+    ): Promise<void> {
+        try {
+
+            if (!isUUID(id)) {
+                return res.status(400).send({
+                    status: 'validationError',
+                    message: 'Invalid transaction ID format',
+                });
+            }
+
+            const transaction = await this.getTransactionByIdUseCase.execute(id);
+
+            if (!transaction) {
+                return res.status(404).send({
+                    status: 'notFound',
+                    message: 'No transaction found with the provided ID.',
+                });
+            }
+
+            res.status(200).send({
+                status: 'success',
+                transaction,
+            });
+        } catch (error) {
+            console.error('[GET /transactions/:id]', error);
+            res.status(500).send({
+                status: 'error',
+                message: 'Failed to retrieve transaction',
             });
         }
     }

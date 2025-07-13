@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { TransactionTypeOrmEntity } from './infrastructure/database/typeorm/entities/transaction.typeorm.entity';
+import { TransactionsModule } from './interfaces/controllers/transactions.module';
 
 @Module({
   imports: [
@@ -13,9 +14,12 @@ import { TransactionTypeOrmEntity } from './infrastructure/database/typeorm/enti
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [TransactionTypeOrmEntity],
+      entities: [
+        TransactionTypeOrmEntity
+      ],
       synchronize: false, // :(
     }),
+    TransactionsModule,
   ],
 })
 export class AppModule {}

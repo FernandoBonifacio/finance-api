@@ -96,3 +96,41 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+
+## Arquitetura do Projeto
+Este projeto segue os princípios de Clean Architecture e DDD (Domain-Driven Design), promovendo alta coesão, baixo acoplamento, testabilidade e manutenção facilitada.
+
+## Estrutura de Pastas
+
+src/
+├── application/                # Casos de uso (Use Cases)
+│   └── use-cases/
+│       └── create-transaction.usecase.ts
+│       └── get-all-transactions.usecase.ts
+│       └── ...
+├── domain/                     # Regras de negócio (Entidades e Interfaces)
+│   └── entities/
+│       └── transaction.entity.ts
+│   └── repositories/
+│       └── transaction.repository.ts
+├── infrastructure/             # Integrações externas (ORM, DB, etc.)
+│   └── database/
+│       └── typeorm/
+│           └── entities/
+│           └── repositories/
+├── interfaces/                 # Interfaces externas (HTTP, Controllers, DTOs)
+│   └── controllers/
+│   └── modules/
+├── app.module.ts              # Módulo principal do NestJS
+└── main.ts                    # Bootstrap da aplicação
+
+## DDL Tabela Transactions
+CREATE TABLE public.transactions (
+	id uuid NOT NULL,
+	title varchar NOT NULL,
+	amount numeric NOT NULL,
+	"type" varchar NOT NULL,
+	category varchar NOT NULL,
+	"createdAt" timestamp NOT NULL,
+	CONSTRAINT "PK_a219afd8dd77ed80f5a862f1db9" PRIMARY KEY (id)
+);

@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -9,15 +11,20 @@ import { validate } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { CreateTransactionUseCase } from 'src/application/use-cases/create-transaction.usecase';
 import { CreateTransactionDto } from 'src/application/dtos/create-transaction.dto';
+import { GetAllTransactionsUseCase } from 'src/application/use-cases/get-all-transactions.usecase';
 
 @Controller('transactions')
 export class TransactionsController {
     constructor(
         private readonly createTransactionUseCase: CreateTransactionUseCase,
+        private readonly getAllTransactionsUseCase: GetAllTransactionsUseCase,
     ) {}
 
     @Post()
-    async create(@Body() body: any, @Res() res): Promise<void> {
+    async create(
+        @Body() body: any, 
+        @Res() res
+    ): Promise<void> {
         const dto = plainToInstance(CreateTransactionDto, body);
         const errors = await validate(dto);
 
@@ -45,6 +52,49 @@ export class TransactionsController {
             return res.status(500).send({
                 status: 'internalError',
                 message: 'Failed to create transaction',
+            });
+        }
+    }
+
+
+    @Get()
+    async findAll(
+        @Query('page') page = '1',
+        @Query('pageSize') pageSize = '10',
+        @Res() res,
+    ): Promise<void> {
+        try {
+            const pageNumber = parseInt(page, 10);
+            const pageSizeNumber = parseInt(pageSize, 10);
+
+            const { total, transactions } = await this.getAllTransactionsUseCase.execute(
+                pageNumber,
+                pageSizeNumber,
+            )
+
+            if (transactions.length === 0) {
+                return res.status(200).send({
+                    status: 'noData',
+                    message: 'No transactions found for this page.',
+                    total: 0,
+                    page: pageNumber,
+                    pageSize: pageSizeNumber,
+                    transactions: [],
+                });
+            }   
+
+            res.status(200).send({
+                status: 'success',
+                    total,
+                    page: pageNumber,
+                    pageSize: pageSizeNumber,
+                    transactions,
+            });
+        } catch (error) {
+            console.error('[GET /transactions]', error);
+            res.status(500).send({
+                status: 'error',
+                message: 'Failed to list transactions',
             });
         }
     }

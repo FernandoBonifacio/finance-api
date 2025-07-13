@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -17,6 +18,7 @@ import { GetAllTransactionsUseCase } from 'src/application/use-cases/get-all-tra
 import { GetTransactionByIdUseCase } from 'src/application/use-cases/get-transaction-by-id.usecase';
 import { UpdateTransactionUseCase } from 'src/application/use-cases/update-transaction.usecase';
 import { UpdateTransactionDto } from 'src/application/dtos/update-transaction.dto';
+import { DeleteTransactionUseCase } from 'src/application/use-cases/delete-transaction.usecase';
 
 @Controller('transactions')
 export class TransactionsController {
@@ -25,6 +27,7 @@ export class TransactionsController {
         private readonly getAllTransactionsUseCase: GetAllTransactionsUseCase,
         private readonly getTransactionByIdUseCase: GetTransactionByIdUseCase,
         private readonly updateTransactionUseCase: UpdateTransactionUseCase,
+        private readonly deleteTransactionUseCase: DeleteTransactionUseCase,
     ) {}
 
     @Post()
@@ -175,6 +178,36 @@ export class TransactionsController {
             return res.status(500).send({
             status: 'error',
             message: 'Failed to update transaction',
+            });
+        }
+    }
+
+    @Delete(':id')
+    async delete(
+        @Param('id') id: string,
+        @Res() res,
+    ): Promise<void> {
+        try {
+            const transaction = await this.getTransactionByIdUseCase.execute(id);
+
+            if (!transaction) {
+                return res.status(404).send({
+                    status: 'notFound',
+                    message: 'No transaction found with the provided ID.',
+                });
+            }
+
+            await this.deleteTransactionUseCase.execute(id);
+
+            return res.status(200).send({
+                status: 'success',
+                message: 'Transaction deleted successfully',
+            });
+        } catch (error) {
+            console.error('[DELETE /transactions/:id]', error);
+            return res.status(500).send({
+                status: 'error',
+                message: 'Failed to delete transaction',
             });
         }
     }

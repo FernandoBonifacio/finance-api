@@ -115,3 +115,35 @@ CREATE TABLE public.transactions (
 	"createdAt" timestamp NOT NULL,
 	CONSTRAINT "PK_a219afd8dd77ed80f5a862f1db9" PRIMARY KEY (id)
 );
+
+## Rotas
+-- Criar
+-- curl --location 'http://127.0.0.1:3000/transactions' \
+--header 'Content-Type: application/json' \
+--data '{
+  "title": "Salário de Dezembro",
+  "amount": 45500008,
+  "type": "INCOME",
+  "category": "Trabalho"
+}
+'
+
+-- Buscar todos
+-- curl --location 'http://127.0.0.1:3000/transactions'
+
+-- Buscar por ID 
+--mcurl --location 'http://127.0.0.1:3000/transactions/2aee5395-21a3-4b5e-bdfa-0082024f748a'
+
+-- Edição
+-- curl --location --request PUT 'http://127.0.0.1:3000/transactions/2aee5395-21a3-4b5e-bdfa-0082024f748a' \
+--header 'Content-Type: application/json' \
+--data '{
+  "title": "oi",
+  "amount": 2,
+  "type": "tcha",
+  "category": "alegria"
+}
+'
+
+-- Deleção
+-- curl --location --request DELETE 'http://127.0.0.1:3000/transactions/2aee5395-21a3-4b5e-bdfa-0082024f748a'
